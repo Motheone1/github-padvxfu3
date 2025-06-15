@@ -1,134 +1,83 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import LanguageToggle from '../components/LanguageToggle';
-import { useLanguage } from '../context/LanguageContext';
 
-const LoginScreen = () => {
-  const { language } = useLanguage();
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [officeNumber, setOfficeNumber] = useState('');
-  const [error, setError] = useState('');
+const LoginScreen: React.FC = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const validateOfficeNumber = (number: string) => {
-    const num = parseInt(number);
-    return num >= 0 && num <= 999;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!/^\d{10}$/.test(phone)) {
-      setError(language === 'en' 
-        ? 'Phone number must be 10 digits' 
-        : 'يجب أن يتكون رقم الهاتف من 10 أرقام');
-      return;
+  const handleLogin = (event: React.FormEvent) => {
+    event.preventDefault();
+    // Simulated login logic for UI validation
+    if (username && password) {
+      alert(`Logged in as ${username}`);
+      // Navigate to office selection page after successful login
+      navigate('/office-selection');
+    } else {
+      alert('Please fill in all fields.');
     }
-    
-    if (!validateOfficeNumber(officeNumber)) {
-      setError(language === 'en' 
-        ? 'Invalid office number. Contact your administrator.' 
-        : 'رقم المكتب غير صالح. يرجى الاتصال بمسؤولك.');
-      return;
-    }
-    
-    navigate('/trip-type');
-  };
-
-  // Translations
-  const translations = {
-    title: language === 'en' ? 'Hudanav' : 'هدى ',
-    subtitle: language === 'en' ? 'Bus guidance app' : 'تطبيق إرشاد الحافلات',
-    nameLabel: language === 'en' ? 'Full Name' : 'الاسم الكامل',
-    phoneLabel: language === 'en' ? 'Phone Number' : 'رقم الهاتف',
-    phonePlaceholder: language === 'en' ? '10-digit number' : '10 أرقام',
-    officeLabel: language === 'en' ? 'Office Number' : 'رقم المكتب',
-    submit: language === 'en' ? 'Submit' : 'تسجيل',
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-teal-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full space-y-6 relative">
-        <LanguageToggle />
-        
-        <div className="text-center">
-          <div className="bg-green-100 text-green-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl font-arabic"></span>
-          </div>
-          <h1 className="text-3xl font-bold text-gray-800">{translations.title}</h1>
-          <p className="text-gray-600 mt-2">{translations.subtitle}</p>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg space-y-8">
+        <div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Hudanav App Login
+          </h2>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            Sign in to access bus guidance tools for Hajj season
+          </p>
         </div>
-        
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {error && (
-            <div className="bg-red-50 text-red-700 p-3 rounded-lg text-sm">
-              {error}
+        <form className="mt-8 space-y-6" onSubmit={handleLogin}>
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
+                Username
+              </label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                required
+                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                placeholder="Enter your username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
             </div>
-          )}
-          
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-              {translations.nameLabel}
-            </label>
-            <input
-              id="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              placeholder={translations.nameLabel}
-              required
-            />
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                required
+                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
           </div>
-          
+
           <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-              {translations.phoneLabel}
-            </label>
-            <input
-              id="phone"
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              placeholder={translations.phonePlaceholder}
-              maxLength={10}
-              required
-            />
-          </div>
-          
-          <div>
-            <label htmlFor="office" className="block text-sm font-medium text-gray-700 mb-1">
-              {translations.officeLabel}
-            </label>
-            <select
-              id="office"
-              value={officeNumber}
-              onChange={(e) => setOfficeNumber(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              required
+            <button
+              type="submit"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
+              disabled={!username || !password}
             >
-              <option value="">{translations.officeLabel}</option>
-              {Array.from({ length: 1000 }, (_, i) => (
-                <option key={i} value={i}>
-                  {i}
-                </option>
-              ))}
-            </select>
+              Sign in
+            </button>
+            {!username || !password ? (
+              <p className="mt-2 text-center text-xs text-gray-500">
+                Complete all fields to enable sign in
+              </p>
+            ) : null}
           </div>
-          
-          <button
-            type="submit"
-            className="w-full bg-gradient-to-r from-green-500 to-teal-600 text-white py-3 rounded-lg font-medium hover:opacity-90 transition-opacity shadow-md"
-          >
-            ✋ {translations.submit}
-          </button>
         </form>
-        
-        <div className="text-center text-sm text-gray-500 mt-8">
-          <p>{translations.terms}</p>
-        </div>
       </div>
     </div>
   );

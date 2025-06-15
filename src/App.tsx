@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// Remove LoginScreen import since we're bypassing it
+import LoginScreen from './screens/LoginScreen';
+import OfficeSelectionScreen from './screens/OfficeSelectionScreen';
+import UserProfileScreen from './screens/UserProfileScreen';
 import TripTypeScreen from './screens/TripTypeScreen';
 import ArafaTripsScreen from './screens/ArafaTripsScreen';
 import MinaTripsScreen from './screens/MinaTripsScreen';
@@ -16,8 +18,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Start directly from trip-type instead of login */}
-        <Route path="/" element={<TripTypeScreen />} />
+        {/* Start with login screen */}
+        <Route path="/" element={<LoginScreen />} />
+        <Route path="/office-selection" element={<OfficeSelectionScreen />} />
+        <Route path="/user-profile" element={<UserProfileScreen />} />
         
         {/* Keep all other routes unchanged */}
         <Route path="/trip-type" element={<TripTypeScreen />} />

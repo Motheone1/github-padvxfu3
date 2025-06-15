@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import LanguageToggle from '../components/LanguageToggle';
+import Header from '../components/Header';
 import { useLanguage } from '../context/LanguageContext';
 
 const TripTypeScreen = () => {
@@ -31,8 +31,8 @@ const TripTypeScreen = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full space-y-8 relative">
-        <LanguageToggle />
+        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full space-y-8 relative">
+        <Header />
         
         <div className="text-center">
           <div className="bg-indigo-100 text-indigo-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">

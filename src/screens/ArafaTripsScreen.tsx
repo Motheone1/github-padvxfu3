@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import LanguageToggle from '../components/LanguageToggle';
+import Header from '../components/Header';
 import { useLanguage } from '../context/LanguageContext';
 
 const ArafaTripsScreen = () => {
@@ -36,8 +36,8 @@ const ArafaTripsScreen = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full space-y-8 relative">
-        <LanguageToggle />
+        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full space-y-8 relative">
+        <Header />
         <button 
           onClick={handleBack}
           className="absolute top-4 left-4 text-gray-500 hover:text-gray-700 transition-colors"
